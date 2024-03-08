@@ -1,0 +1,19 @@
+--- !<tag:barectf.org,2020/3/config>
+trace:
+  type:
+    $include:
+      - stdint.yaml
+    native-byte-order: le
+    clock-types:
+      default:
+        $c-type: uint64_t
+    data-stream-types:
+      default:
+        $is-default: true
+        $default-clock-type-name: default
+        event-record-types:
+          my_event:
+            payload-field-type:
+              class: struct
+              members:
+                - number: uint32
