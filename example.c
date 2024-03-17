@@ -2,9 +2,23 @@
 
 #include "barectf-platform-linux-fs.h"
 #include "barectf.h"
+#include "zmq_api.h"
 
 int main(void)
 {
+    zmq_connection_return_values rs = zmq_api_init();
+    if (rs != E_OK){
+        printf("initialization is not okay");
+        return 0;
+    }
+    const int t_size = 2;
+    int buffer[t_size];
+    for(int i=0; i<10 ; i++){
+        buffer[0] = i+2;
+        buffer[1] = i+1;
+        zmq_api_send_mess(t_size,buffer);
+    }
+    zmq_api_close();
     struct barectf_platform_linux_fs_ctx *platform_ctx;
     struct barectf_default_ctx *barectf_ctx;
     unsigned int i;

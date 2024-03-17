@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "time.h": "c",
+        "stdlib.h": "c",
+        "cerrno": "c",
+        "cstdlib": "c",
+        "zmq_api.h": "c",
+        "array": "c",
+        "string": "c",
+        "string_view": "c",
+        "initializer_list": "c",
+        "utility": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}
