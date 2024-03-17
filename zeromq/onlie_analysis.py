@@ -18,18 +18,18 @@ with zmq.Context() as context:
     try:
         while True:
             binary_topic, data_buffer = socket.recv().split(b' ', 1)
-            print(binary_topic)
-            print(data_buffer)
+            # print(binary_topic)
+            # print(data_buffer)
             topic = binary_topic.decode(encoding = 'ascii')
             # data_buffer = socket.recv()
             print("Message {:d}:".format(i))
             print("\ttopic: '{}'".format(topic))
 
-            packet_size = len(data_buffer) // struct.calcsize("i")
-            print(data_buffer)
+            packet_size = len(data_buffer) // struct.calcsize("B")
+            # print(data_buffer)
             print("\tpacket size: {:d}".format(packet_size))
 
-            struct_format = "{:d}i".format(packet_size)
+            struct_format = "{:d}B".format(packet_size)
 
             data = struct.unpack(struct_format, data_buffer)
 

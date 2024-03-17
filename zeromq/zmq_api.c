@@ -3,7 +3,7 @@
 
 void *context = NULL;
 void *data_socket = NULL;
-const char *TOPIC = "Trace";
+const char *TOPIC = "Trace__";
 const char *TCP = "tcp://*:5555";
 size_t topic_size = sizeof(TOPIC);
 
@@ -26,9 +26,9 @@ zmq_connection_return_values zmq_api_init(){
     return E_OK;
 }
 
-zmq_connection_return_values zmq_api_send_mess(int mess_size, int* buffer){
+zmq_connection_return_values zmq_api_send_mess(size_t mess_size, uint8_t* buffer){
 
-    size_t envelope_size = topic_size + 1 + mess_size * sizeof(int);
+    size_t envelope_size = topic_size + 1 + mess_size * sizeof(uint8_t);
     zmq_msg_t envelope;
     const int rmi = zmq_msg_init_size(&envelope, envelope_size);
 
@@ -41,7 +41,7 @@ zmq_connection_return_values zmq_api_send_mess(int mess_size, int* buffer){
 
     memcpy(zmq_msg_data(&envelope), TOPIC, topic_size);
     memcpy((void*)((char*)zmq_msg_data(&envelope) + topic_size), " ", 1);
-    memcpy((void*)((char*)zmq_msg_data(&envelope) + (1 + topic_size)), buffer, mess_size * sizeof(int));
+    memcpy((void*)((char*)zmq_msg_data(&envelope) + (1 + topic_size)), buffer, mess_size * sizeof(uint8_t));
 
     const size_t rs = zmq_msg_send(&envelope, data_socket, 0);
     if (rs != envelope_size)

@@ -10,6 +10,7 @@
 #include <stdio.h>
 // For EXIT_*
 #include <stdlib.h>
+#include <stdint.h>
 
 typedef enum zmq_connection_return_values{
     E_OK,
@@ -22,7 +23,7 @@ typedef enum zmq_connection_return_values{
 } zmq_connection_return_values;
 
 zmq_connection_return_values zmq_api_init();
-zmq_connection_return_values zmq_api_send_mess(int mess_size, int* buffer);
+zmq_connection_return_values zmq_api_send_mess(size_t mess_size, uint8_t* buffer);
 zmq_connection_return_values zmq_api_close();
 
 #endif /*ZQM_API_H*/

@@ -226,7 +226,7 @@ void _commit_er(void * const vctx)
 	struct barectf_ctx * const ctx = _FROM_VOID_PTR(struct barectf_ctx, vctx);
 
 	/* Is the packet full? */
-	// if (barectf_packet_is_full(ctx)) 
+	if (barectf_packet_is_full(ctx)) 
 	{
 		/* Yes: close it now */
 		ctx->cbs.close_packet(ctx->data);
@@ -578,7 +578,7 @@ void barectf_default_trace_my_event(struct barectf_default_ctx * const sctx,
 	uint32_t er_size;
 
 	/* Save timestamp */
-	sctx->cur_last_event_ts = ctx->cbs.default_clock_get_value(ctx->data);
+	sctx->cur_last_event_ts = get_clock(ctx->data);
 
 	if (!ctx->is_tracing_enabled) {
 		goto end;

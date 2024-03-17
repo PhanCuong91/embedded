@@ -31,6 +31,7 @@
 
 #include "barectf-platform-linux-fs.h"
 #include "barectf.h"
+#include "zmq_api.h"
 
 #ifdef __cplusplus
 # define _FROM_VOID_PTR(_type, _value)	static_cast<_type *>(_value)
@@ -46,7 +47,7 @@ struct barectf_platform_linux_fs_ctx {
 	unsigned int full_backend_rand_max;
 };
 
-static uint64_t get_clock(void * const data)
+uint64_t get_clock(void * const data)
 {
 	struct timespec ts;
 
@@ -56,10 +57,11 @@ static uint64_t get_clock(void * const data)
 
 static void write_packet(const struct barectf_platform_linux_fs_ctx * const platform_ctx)
 {
-	const size_t nmemb = fwrite(barectf_packet_buf(&platform_ctx->ctx),
-		barectf_packet_buf_size(&platform_ctx->ctx), 1, platform_ctx->fh);
+	// const size_t nmemb = fwrite(barectf_packet_buf(&platform_ctx->ctx),
+	// 	barectf_packet_buf_size(&platform_ctx->ctx), 1, platform_ctx->fh);
 
-	assert(nmemb == 1);
+	// assert(nmemb == 1);
+	zmq_api_send_mess(barectf_packet_buf_size(&platform_ctx->ctx), barectf_packet_buf(&platform_ctx->ctx));
 }
 
 static int is_backend_full(void * const data)
